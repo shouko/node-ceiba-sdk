@@ -1,0 +1,23 @@
+{
+  "name": "ceiba-sdk",
+  "version": "0.0.1",
+  "description": "Node.js SDK for NTU CEIBA",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shouko/node-ceiba-sdk"
+  },
+  "author": "shouko <imshouko@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shouko/node-ceiba-sdk/issues"
+  },
+  "homepage": "https://github.com/shouko/node-ceiba-sdk",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "request": "^2.72.0"
+  }
+}
