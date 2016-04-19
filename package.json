@@ -18,6 +18,7 @@
   "homepage": "https://github.com/shouko/node-ceiba-sdk",
   "dependencies": {
     "bluebird": "^3.3.5",
-    "request": "^2.72.0"
+    "iconv-lite": "^0.4.13",
+    "request-promise": "^3.0.0"
   }
 }
