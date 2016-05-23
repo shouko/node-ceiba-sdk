@@ -25,7 +25,14 @@ var Ceiba = function(username, password) {
     headers: self.headers,
     jar: self.jar,
     method: 'GET',
-    url: urls.ceiba_api_entry
+    url: urls.ceiba_web_home
+  }).then(function() {
+    return rp({
+      headers: self.headers,
+      jar: self.jar,
+      method: 'GET',
+      url: urls.ceiba_api_entry
+    });
   }).then(function() {
     self.headers.referer = urls.ceiba_sso_callback;
     return rp({
@@ -65,10 +72,17 @@ var Ceiba = function(username, password) {
     return rp({
       headers: self.headers,
       jar: self.jar,
+      method: 'GET',
+      url: urls.ceiba_sso_callback
+    });
+  }).then(function() {
+    return rp({
+      headers: self.headers,
+      jar: self.jar,
       json: true,
       method: 'GET',
       url: urls.ceiba_api_home
-    })
+    });
   }).then(function(body) {
     console.log("API response", body);
   }).then(function() {
@@ -80,6 +94,7 @@ var Ceiba = function(username, password) {
     });
   }).then(function(result) {
     console.log("CEIBA home", iconv.decode(new Buffer(result), 'Big5'));
+    console.log(self.jar);
   }).catch(function(e) {
     console.log('error', e);
   });
