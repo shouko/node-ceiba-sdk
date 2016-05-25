@@ -48,6 +48,21 @@ Semester.prototype.init = function(data) {
       slot: course_time.slot
     });
   });
-}
+  return self;
+};
+
+Semester.prototype.get_course = function(param) {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    var index = 0;
+    if(Math.abs(param) != param) {
+      index = _.findIndex(self.courses, { sn: param });
+    }
+    if(self.courses[index].ready) {
+      return resolve(self.courses[index]);
+    }
+    self.courses[index].fetch().then(resolve);
+  });
+};
 
 module.exports = Semester;

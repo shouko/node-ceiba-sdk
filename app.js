@@ -101,7 +101,21 @@ Ceiba.prototype.login = function(username, password) {
       url: constants.urls.ceiba_sso_callback_endpoint
     });
   });
-}
+};
+
+Ceiba.prototype.get_semester = function(param) {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    var index = 0;
+    if(Math.abs(param) != param) {
+      index = _.findIndex(self.semester, { name: param });
+    }
+    if(self.semester[index].courses.length != 0) {
+      return resolve(self.semester[index]);
+    }
+    self.semester[index].fetch(resolve);
+  });
+};
 
 Ceiba.prototype.get = function(params) {
   var self = this;

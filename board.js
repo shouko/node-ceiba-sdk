@@ -48,7 +48,7 @@ Board.prototype.get_posts = function() {
     if(self.posts.length != 0) {
       resolve(self.posts);
     } else {
-      self.fetch.then(resolve);
+      self.fetch().then(resolve);
     }
   });
 };

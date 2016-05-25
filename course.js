@@ -15,6 +15,7 @@ var Course = function(data, jar) {
   this.homeworks = [];
   this.bulletin = [];
   this.boards = [];
+  this.ready = false;
 };
 
 Course.prototype.add_time = function(course_time) {
@@ -33,12 +34,13 @@ Course.prototype.fetch = function() {
       course_sn: this.sn
     })
   }).then(function(data) {
-    console.log(data);
     self.update_contents(data.contents, data.content_files);
     self.update_grades(data.course_grade);
     self.update_homeworks(data.homeworks);
     self.update_bulletin(data.bulletin);
     if(!data.boards) self.boards = false;
+    self.ready = true;
+    return self;
   });
 };
 
@@ -109,10 +111,9 @@ Course.prototype.get_boards = function() {
   var self = this;
   return new Promise(function(resolve, reject) {
     if(self.boards.length != 0) {
-      resolve(self.boards);
-    } else {
-      self.fetch_boards.then(resolve);
+      return resolve(self.boards);
     }
+    self.fetch_boards().then(resolve);
   });
 };
 
