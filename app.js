@@ -6,7 +6,7 @@ var urlbuilder = require('./urlbuilder');
 var constants = require('./constants');
 var Semester = require('./semester');
 
-var Ceiba = function(username, password) {
+var Ceiba = function(username, password, cb) {
   var self = this;
   self.current_semester = 0;
   self.semester = [];
@@ -36,10 +36,9 @@ var Ceiba = function(username, password) {
       url: constants.urls.ceiba_web_home
     });
   }).then(function(result) {
-    console.log("CEIBA home", iconv.decode(new Buffer(result), 'Big5'));
-    console.log(self.jar);
+    cb(null, result);
   }).catch(function(e) {
-    console.log('error', e);
+    cb(e, null);
   });
 };
 
