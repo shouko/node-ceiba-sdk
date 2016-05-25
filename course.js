@@ -2,7 +2,7 @@ var rp = require('request-promise');
 var Promise = require('bluebird');
 var urlbuilder = require('./urlbuilder');
 var constants = require('./constants');
-var async = require('async');
+var Board = require('./board');
 
 var Course = function(data, jar) {
   this.jar = jar;
@@ -36,6 +36,7 @@ Course.prototype.fetch = function() {
     self.parse_grades(data.course_grade);
     self.parse_homeworks(data.homeworks);
     self.parse_bulletin(data.bulletin);
+    if(!data.board) this.board = false;
   });
 };
 
