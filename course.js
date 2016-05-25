@@ -38,7 +38,7 @@ Course.prototype.fetch = function() {
     self.parse_grades(data.course_grade);
     self.parse_homeworks(data.homeworks);
     self.parse_bulletin(data.bulletin);
-    if(!data.board) this.board = false;
+    if(!data.board) self.board = false;
   });
 };
 
@@ -59,19 +59,26 @@ Course.prototype.parse_contents = function(contents, content_files) {
 Course.prototype.parse_grades = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
-  // TODO
+  data.forEach(function(row) {
+    self.grades.push(row);
+  });
 };
 
 Course.prototype.parse_homeworks = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
-  // TODO
+  data.forEach(function(row) {
+    self.homeworks.push(row);
+  });
 };
 
 Course.prototype.parse_bulletin = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
-  // TODO
+  data.forEach(function(row) {
+    if(row.b_link == 'http://') row.b_link = false;
+    self.bulletin.push(row);
+  });
 };
 
 module.exports = Course;
