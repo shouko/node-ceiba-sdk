@@ -101,6 +101,7 @@ Course.prototype.fetch_boards = function() {
     data.forEach(function(board) {
       self.boards.push(new Board(self.sn, board.sn, board.caption, self.jar));
     });
+    return self.boards;
   });
 }
 

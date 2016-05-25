@@ -42,8 +42,34 @@ Board.prototype.fetch = function() {
   });
 };
 
-Board.prototype.post = function() {
+Board.prototype.get_posts = function() {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    if(self.posts.length != 0) {
+      resolve(self.posts);
+    } else {
+      self.fetch.then(resolve);
+    }
+  });
+};
 
+Board.prototype.post = function(subject, content, parent_sn) {
+  var self = this;
+  return rp({
+    headers: constants.headers,
+    jar: self.jar,
+    json: true,
+    method: 'POST',
+    url: urlbuilder.api({
+      mode: 'write_board'
+    }),
+    form: {
+      subject: subject,
+      content: content,
+      board_sn: self.sn,
+      parent: parent_sn
+    }
+  });
 };
 
 module.exports = Board;
