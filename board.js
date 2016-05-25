@@ -18,7 +18,7 @@ Board.prototype.fetch = function() {
     jar: self.jar,
     json: true,
     method: 'GET',
-    url: urlbuilder({
+    url: urlbuilder.api({
       mode: 'read_board_post',
       board: self.sn,
       course_sn: self.course_sn

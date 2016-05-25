@@ -11,6 +11,12 @@ module.exports = {
     'ceiba_sso_callback_prefix': 'https://ceiba.ntu.edu.tw/ChkSessLib.php?sess=',
     'ceiba_sso_callback_endpoint': 'https://ceiba.ntu.edu.tw/ChkSessLib.php',
     'ceiba_api_base': 'https://ceiba.ntu.edu.tw/course/f03067/app/login.php?api=1&',
-    'ceiba_web_home': 'https://ceiba.ntu.edu.tw/student/index.php'
+    'ceiba_web_home': 'https://ceiba.ntu.edu.tw/student/index.php',
+    'ceiba_root': 'https://ceiba.ntu.edu.tw/course/'
+  },
+  'download': {
+    'bulletin': 'bulletin',
+    'content': 'content',
+    'board': 'board'
   }
 };

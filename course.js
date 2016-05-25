@@ -28,7 +28,7 @@ Course.prototype.fetch = function() {
     jar: self.jar,
     json: true,
     method: 'GET',
-    url: urlbuilder({
+    url: urlbuilder.api({
       mode: 'course',
       course_sn: this.sn
     })
@@ -49,7 +49,6 @@ Course.prototype.parse_contents = function(contents, content_files) {
   contents.forEach(function(content) {
     content_map[content.syl_sn] = self.contents.length;
     content.files = [];
-    console.log("Push", content);
     self.contents.push(content);
   });
   content_files.forEach(function(content_file) {

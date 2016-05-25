@@ -16,7 +16,7 @@ var Ceiba = function(username, password, cb) {
       jar: self.jar,
       json: true,
       method: 'GET',
-      url: urlbuilder({
+      url: urlbuilder.api({
         mode: 'semester'
       })
     });
@@ -110,7 +110,7 @@ Ceiba.prototype.get = function(params) {
     jar: self.jar,
     json: true,
     method: 'GET',
-    url: urlbuilder(params),
+    url: urlbuilder.api(params),
   });
 };
 
