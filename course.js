@@ -14,7 +14,7 @@ var Course = function(data, jar) {
   this.grades = [];
   this.homeworks = [];
   this.bulletin = [];
-  this.board = [];
+  this.boards = [];
 };
 
 Course.prototype.add_time = function(course_time) {
@@ -34,18 +34,19 @@ Course.prototype.fetch = function() {
     })
   }).then(function(data) {
     console.log(data);
-    self.parse_contents(data.contents, data.content_files);
-    self.parse_grades(data.course_grade);
-    self.parse_homeworks(data.homeworks);
-    self.parse_bulletin(data.bulletin);
-    if(!data.board) self.board = false;
+    self.update_contents(data.contents, data.content_files);
+    self.update_grades(data.course_grade);
+    self.update_homeworks(data.homeworks);
+    self.update_bulletin(data.bulletin);
+    if(!data.boards) self.boards = false;
   });
 };
 
-Course.prototype.parse_contents = function(contents, content_files) {
+Course.prototype.update_contents = function(contents, content_files) {
   if(typeof(contents) == 'undefined' || typeof(content_files) == 'undefined') return;
   var self = this;
   var content_map = {};
+  self.contents = [];
   contents.forEach(function(content) {
     content_map[content.syl_sn] = self.contents.length;
     content.files = [];
@@ -56,15 +57,16 @@ Course.prototype.parse_contents = function(contents, content_files) {
   });
 };
 
-Course.prototype.parse_grades = function(data) {
+Course.prototype.update_grades = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
+  self.grades = [];
   data.forEach(function(row) {
     self.grades.push(row);
   });
 };
 
-Course.prototype.parse_homeworks = function(data) {
+Course.prototype.update_homeworks = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
   data.forEach(function(row) {
@@ -72,12 +74,44 @@ Course.prototype.parse_homeworks = function(data) {
   });
 };
 
-Course.prototype.parse_bulletin = function(data) {
+Course.prototype.update_bulletin = function(data) {
   if(typeof(data) == 'undefined') return;
   var self = this;
+  self.bulletin = [];
   data.forEach(function(row) {
     if(row.b_link == 'http://') row.b_link = false;
     self.bulletin.push(row);
+  });
+};
+
+Course.prototype.fetch_boards = function() {
+  var self = this;
+  return rp({
+    headers: constants.headers,
+    jar: self.jar,
+    json: true,
+    method: 'GET',
+    url: urlbuilder.api({
+      mode: 'read_board',
+      course_sn: this.sn,
+      board: 0
+    })
+  }).then(function(data) {
+    self.boards = [];
+    data.forEach(function(board) {
+      self.boards.push(new Board(self.sn, board.sn, board.caption, self.jar));
+    });
+  });
+}
+
+Course.prototype.get_boards = function() {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    if(self.boards.length != 0) {
+      resolve(self.boards);
+    } else {
+      self.fetch_boards.then(resolve);
+    }
   });
 };
 
