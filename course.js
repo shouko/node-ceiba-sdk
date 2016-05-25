@@ -23,16 +23,18 @@ Course.prototype.add_time = function(course_time) {
 
 Course.prototype.fetch = function() {
   var self = this;
-  rp({
+  return rp({
     headers: constants.headers,
     jar: self.jar,
+    json: true,
     method: 'GET',
     url: urlbuilder({
       mode: 'course',
       course_sn: this.sn
     })
   }).then(function(data) {
-    self.parse_contents(data.contents);
+    console.log(data);
+    self.parse_contents(data.contents, data.content_files);
     self.parse_grades(data.course_grade);
     self.parse_homeworks(data.homeworks);
     self.parse_bulletin(data.bulletin);
@@ -40,16 +42,17 @@ Course.prototype.fetch = function() {
   });
 };
 
-Course.prototype.parse_contents = function(data) {
-  if(typeof(data) == 'undefined') return;
+Course.prototype.parse_contents = function(contents, content_files) {
+  if(typeof(contents) == 'undefined' || typeof(content_files) == 'undefined') return;
   var self = this;
   var content_map = {};
-  data.contents.forEach(function(content) {
+  contents.forEach(function(content) {
     content_map[content.syl_sn] = self.contents.length;
     content.files = [];
+    console.log("Push", content);
     self.contents.push(content);
   });
-  data.content_files.forEach(function(content_file) {
+  content_files.forEach(function(content_file) {
     self.contents[content_map[content_file.syl_sn]].files.push(content_file.file_name);
   });
 };
