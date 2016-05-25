@@ -106,7 +106,7 @@ Ceiba.prototype.login = function(username, password) {
 Ceiba.prototype.get_semester = function(param) {
   var self = this;
   return new Promise(function(resolve, reject) {
-    var index = 0;
+    var index = param;
     if(Math.abs(param) != param) {
       index = _.findIndex(self.semester, { name: param });
     }
