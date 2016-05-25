@@ -29,20 +29,21 @@ Semester.prototype.fetch = function() {
 };
 
 Semester.prototype.init = function(data) {
-  var semester = _.filter(data.semester, _.matches(now: 1));
+  var self = this;
+  var semester = _.filter(data.semester, _.matches({now: 1}));
   if(semester.length == 0) {
     throw new Error('Unknown semester');
   }
-  semester[0].semester
+  semester[0].semester;
   var course_map = {};
-  semester.grid.forEach(function(course) {
+  data.grid.forEach(function(course) {
     if(course.course_sn == 0) return;
-    course_map[course.course_sn] = this.courses.length;
-    this.courses.push(new Course(course, jar));
+    course_map[course.course_sn] = self.courses.length;
+    self.courses.push(new Course(course, self.jar));
   });
-  semester.calendar.forEach(function(course_time) {
+  data.calendar.forEach(function(course_time) {
     if(!course_map[course_time.course_sn]) return;
-    this.courses[course_map[course_time.course_sn]].add_time({
+    self.courses[course_map[course_time.course_sn]].add_time({
       day: course_time.day,
       slot: course_time.slot
     });
