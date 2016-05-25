@@ -30,7 +30,7 @@ Course.prototype.fetch = function() {
     url: urlbuilder({
       mode: 'course',
       course_sn: this.sn
-    });
+    })
   }).then(function(data) {
     self.parse_contents(data.contents);
     self.parse_grades(data.course_grade);
