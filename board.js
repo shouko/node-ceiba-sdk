@@ -16,6 +16,7 @@ Board.prototype.fetch = function() {
   return rp({
     headers: constants.headers,
     jar: self.jar,
+    json: true,
     method: 'GET',
     url: urlbuilder({
       mode: 'read_board_post',
@@ -39,6 +40,10 @@ Board.prototype.fetch = function() {
 ]
 */
   });
-}
+};
 
-module.exports = Board;;
+Board.prototype.post = function() {
+
+};
+
+module.exports = Board;
