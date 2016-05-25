@@ -1,14 +1,53 @@
 var rp = require('request-promise');
 var Promise = require('bluebird');
 var iconv = require('iconv-lite');
+var _ = require('lodash');
 var urlbuilder = require('./urlbuilder');
 var constants = require('./constants');
+var Semester = require('./semester');
 
 var Ceiba = function(username, password) {
   var self = this;
+  self.current_semester = 0;
+  self.semester = [];
+  self.login(username, password).then(function() {
+    return rp({
+      headers: self.headers,
+      jar: self.jar,
+      json: true,
+      method: 'GET',
+      url: urlbuilder({
+        mode: 'semester'
+      })
+    });
+  }).then(function(data) {
+    data.semester.forEach(function(semester) {
+      self.semester.push(new Semester(semester.semester, self.jar));
+      if(semester.now) {
+        self.current_semester = semester.semester;
+        self.semester[self.semester.length - 1].init(data);
+      }
+    });
+  }).then(function() {
+    return rp({
+      jar: self.jar,
+      encoding: null,
+      method: 'GET',
+      url: constants.urls.ceiba_web_home
+    });
+  }).then(function(result) {
+    console.log("CEIBA home", iconv.decode(new Buffer(result), 'Big5'));
+    console.log(self.jar);
+  }).catch(function(e) {
+    console.log('error', e);
+  });
+};
+
+Ceiba.prototype.login = function(username, password) {
+  var self = this;
   self.jar = rp.jar();
   self.headers = constants.headers;
-  rp({
+  return rp({
     headers: self.headers,
     jar: self.jar,
     method: 'GET',
@@ -62,32 +101,8 @@ var Ceiba = function(username, password) {
       method: 'GET',
       url: constants.urls.ceiba_sso_callback_endpoint
     });
-  }).then(function() {
-    return rp({
-      headers: self.headers,
-      jar: self.jar,
-      json: true,
-      method: 'GET',
-      url: urlbuilder({
-        mode: 'semester'
-      })
-    });
-  }).then(function(body) {
-    console.log("API response", body);
-  }).then(function() {
-    return rp({
-      jar: self.jar,
-      encoding: null,
-      method: 'GET',
-      url: constants.urls.ceiba_web_home
-    });
-  }).then(function(result) {
-    console.log("CEIBA home", iconv.decode(new Buffer(result), 'Big5'));
-    console.log(self.jar);
-  }).catch(function(e) {
-    console.log('error', e);
   });
-};
+}
 
 Ceiba.prototype.get = function(params) {
   var self = this;
