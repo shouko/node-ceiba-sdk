@@ -8,8 +8,9 @@ module.exports = {
     'ceiba_api_entry': 'https://ceiba.ntu.edu.tw/course/f03067/app/info_web.php?api_version=1.1',
     'ntu_sso_entry': 'https://web2.cc.ntu.edu.tw/p/s/login2/p6.php?url=https://ceiba.ntu.edu.tw/ChkSessLib.php',
     'ntu_sso_login': 'https://web2.cc.ntu.edu.tw/p/s/login2/p1.php',
-    'ceiba_sso_callback': 'https://ceiba.ntu.edu.tw/ChkSessLib.php',
-    'ceiba_api_home': 'https://ceiba.ntu.edu.tw/course/f03067/app/login.php?api=1&&mode=semester',
+    'ceiba_sso_callback_prefix': 'https://ceiba.ntu.edu.tw/ChkSessLib.php?sess=',
+    'ceiba_sso_callback_endpoint': 'https://ceiba.ntu.edu.tw/ChkSessLib.php',
+    'ceiba_api_base': 'https://ceiba.ntu.edu.tw/course/f03067/app/login.php?api=1&',
     'ceiba_web_home': 'https://ceiba.ntu.edu.tw/student/index.php'
   }
 };
