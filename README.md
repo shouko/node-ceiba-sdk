@@ -16,31 +16,33 @@ This project is at a very early stage of development, many features may not work
 
 ## Usage
 
-    $ node
-    > var Ceiba = require('./ceiba')
-    > var ceiba = new Ceiba('NTU_USERNAME', 'NTU_PASSWORD', function(err) {
-        if(!err) {
-          // connected
-        }
-      });
+```js
+$ node
+> var Ceiba = require('./ceiba')
+> var ceiba = new Ceiba('NTU_USERNAME', 'NTU_PASSWORD', function(err) {
+    if(!err) {
+      // connected
+    }
+  });
+```
 
-<br>
+```js
+// fetches semester data asynchronously, returns a Promise
+// note that semester[0], which is the latest semester, is fetched automatically upon login
+ceiba.semseter[4].fetch();
 
-    // fetches semester data asynchronously, returns a Promise
-    // note that semester[0], which is the latest semester, is fetched automatically upon login
-    ceiba.semseter[4].fetch();
+// prints courses in designated semester
+console.log(ceiba.semester[4].courses);
 
-    // prints courses in designated semester
-    console.log(ceiba.semester[4].courses);
+// fetches detailed course data asynchronously, returns a Promise
+ceiba.semester[4].courses[0].fetch();
 
-    // fetches detailed course data asynchronously, returns a Promise
-    ceiba.semester[4].courses[0].fetch();
+// prints detailed data includes content files, bulletin, homeworks, grades
+console.log(ceiba.semester[4].courses[0]);
 
-    // prints detailed data includes content files, bulletin, homeworks, grades
-    console.log(ceiba.semester[4].courses[0]);
-
-    // fetches discussion boards list for the course asynchronously, returns a Promise
-    ceiba.semester[4].courses[0].fetch_boards();
+// fetches discussion boards list for the course asynchronously, returns a Promise
+ceiba.semester[4].courses[0].fetch_boards();
+```
 
 ## License
 
