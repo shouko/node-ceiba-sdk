@@ -20,6 +20,7 @@
     "bluebird": "^3.3.5",
     "iconv-lite": "^0.4.13",
     "lodash": "^4.13.1",
-    "request-promise": "^3.0.0"
+    "request": "^2.34.0",
+    "request-promise": "^4.1.1"
   }
 }
