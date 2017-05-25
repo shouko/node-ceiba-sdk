@@ -12,18 +12,17 @@ This project is at a very early stage of development, many features may not work
 
 ## Getting Started
 
-    $ npm install # install dependencies
+    npm install ceiba-sdk
 
 ## Usage
 
 ```js
-$ node
-> var Ceiba = require('./ceiba')
-> var ceiba = new Ceiba('NTU_USERNAME', 'NTU_PASSWORD', function(err) {
-    if(!err) {
-      // connected
-    }
-  });
+var Ceiba = require('ceiba-sdk')
+var ceiba = new Ceiba('NTU_USERNAME', 'NTU_PASSWORD', function(err) {
+  if(!err) {
+    // connected
+  }
+});
 ```
 
 ```js
@@ -47,7 +46,3 @@ ceiba.semester[4].courses[0].fetch_boards();
 ## License
 
 [MIT License](LICENSE)
-
-## Contributor
-
-[Shouko](https://github.com/shouko)
