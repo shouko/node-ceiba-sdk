@@ -1,6 +1,6 @@
 {
   "name": "ceiba-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node.js SDK for NTU CEIBA",
   "main": "ceiba.js",
   "scripts": {
